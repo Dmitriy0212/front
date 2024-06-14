@@ -18,7 +18,7 @@
 
 body {
     background: content-box radial-gradient(rgb(71 79 252), rgb(10, 50, 63));
-    background-size: 15%;
+    background-size: 50%;
     max-width: 1200px;
     margin: 0px auto;
     padding: 0px 40px;
