@@ -1,0 +1,27 @@
+.content {
+    height: fit-content;
+    min-width: 375px;
+    border: 1px solid rgb(91, 71, 171);
+    border-radius: 5px;
+    box-shadow: rgb(101, 89, 150) 3px 3px 3px, rgb(101, 89, 150) -1em 0px 2.4em;
+    text-align: center;
+    margin: 10px;
+    margin-left: 20px;
+    padding: 10px;
+    background: rgb(178, 198, 243);
+}
+
+.input {
+    box-shadow: rgb(101, 89, 150) 0px 3px 10px;
+    margin-bottom: 3px;
+    border: 2px solid rgb(157, 148, 233);
+    border-radius: 3px;
+}
+
+.form {
+    padding: 5px;
+    border: 1px solid rgb(91, 71, 171);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}

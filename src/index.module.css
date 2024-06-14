@@ -1,0 +1,30 @@
+.contentRoot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contentApp {
+    display: flex;
+    flex-direction: column;
+}
+
+.contentLinc {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+}
+
+body {
+    background: content-box radial-gradient(rgb(71 79 252), rgb(10, 50, 63));
+    background-size: 15%;
+    max-width: 1200px;
+    margin: 0px auto;
+    padding: 0px 40px;
+    box-sizing: content-box;
+}
+
+input, textarea {
+    min-width: 350px;
+}
