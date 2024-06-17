@@ -4,26 +4,44 @@ import { useState } from "react"
 import { Link } from "react-router-dom";
 import axios from 'axios';
 export default function UserAuth(props) {
-  const [userStstus, setUserStstus] = useState('');
+  const [userStatus, setUserStatus] = useState('');
+  const [codeStatus, setCodeStatus] = useState(false);
+  const [mailStatus, setMailStatus] = useState('');
+  const [timeStatus, setTimeStatus] = useState('');
 
-  const { register, handleSubmit, formState: { errors, isValid } } = useForm({ mode: 'onSubmit' })
-  
+  const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm({ mode: 'onSubmit' })
+
   const onSubmit = (data) => {
     if (isValid === true) {
       axios.post("https://jihugy-7507e8053d51.herokuapp.com/auth", data).then((response) => {
 
         if (response.data.status !== 200) {
-          setUserStstus('Пользователь не зарегестрирован')
+          setUserStatus('У нас не зарегистрирован пользователь с таким адресом электронной почты')
           return
         }
         if (response.data.status === 200) {
-          props.func()
+          console.log(response.data.mail)
+          setMailStatus(response.data.mail)
+          setCodeStatus(true)
+          reset()
+          timeOut()
+          setTimeStatus('Время действия кода закончено, попробуйте снова')
         }
       });
     }
   }
-  const handleSubmit1 = (e)=>{
-    setUserStstus('')
+
+  const timeOut = () => {
+    setTimeout(() => {
+      setCodeStatus(false);
+      
+      console.log(timeStatus)
+    },"3000");
+  }
+
+  const handleSubmit1 = (e) => {
+    setUserStatus('')
+    setTimeStatus('')
   }
   return (
     <>
@@ -32,37 +50,63 @@ export default function UserAuth(props) {
           <img className={classes.conteinerleftimg} src="/pngwing.svg" alt="" />
         </div>
         <div className={classes.conteinerwrite}>
-          <div className={classes.conteinerwriteposi}>
-            <div className={classes.conteinertitle}>Войти</div>
-            <div className={classes.conteinerwritedickr}>
-              <p className={classes.conteinerheder}>Продолжая, вы соглашаетесь с нашим <span className={classes.conteinerwritedickrspun}>Пользовательским соглашением,</span> <span className={classes.conteinerwritedickrspun}>Политикой конфиденциальности</span> и использованием файлов <span className={classes.conteinerwritedickrspun}>COOKIE</span></p>
-            </div>
-            <form className={classes.formUserAuth} onSubmit={handleSubmit(onSubmit)}>
-              <input {...register('gmail', {
-                required: 'Поле не может быть пустым',
-                minLength: {
-                  value: 5,
-                  message: 'Мало символов'
-                },
-                pattern: {
-                  value: /[A-Za-zA-Za-z]+[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?/,
-                  message: 'Mail не корктный'
-                },
-                ero: {
-                  value: 501,
-                  message: 'uer'
-                }
-              })} className={classes.inputMail} type="text" placeholder='Адрес электронной почты' onChange={handleSubmit1} />
-              <div>{errors?.gmail && <p style={{ color: 'red' }}>{errors?.gmail.message || 'Error!'}</p>}</div>
-              {userStstus !== '' ?
-                            <p style={{ color: 'red' }}>{userStstus}</p>:
-                            <></>
-                        }
-              <input className={classes.buttonSubmit} type="submit" value="Отправить" />
-            </form>
-            <div className={classes.conteinerheder}>Вы у нас впервые? <span className={classes.registrspun}><Link href="#">ЗАРЕГИСТРИРОВАТЬСЯ</Link></span></div>
-            <Link className={classes.supportUser} to="#">Поддержка пользователей онлайн</Link>
-          </div>
+          {codeStatus === true ?
+            <>
+              <div className={classes.conteinerwriteposi}>
+                <div className={classes.conteinertitle}>Введите код подтверждения</div>
+                <div className={classes.conteinerwritedickrafter}>
+                  <p className={classes.conteinerheder}>который мы отправили на ваш адрес электронной почты {mailStatus}</p>
+                </div>
+                <form className={classes.formUserAuth} onSubmit={handleSubmit(onSubmit)}>
+                  {userStatus !== '' ?
+                    <p className={classes.notUser}>{userStatus}</p> :
+                    <></>
+                  }
+                  <input {...register('gmail', {
+                    required: 'Поле не может быть пустым',
+                    minLength: {
+                      value: 5,
+                      message: 'Мало символов'
+                    }
+                  })} className={classes.inputMail} type="text" placeholder='Код подтверждения' onChange={handleSubmit1} />
+                  <label className={classes.conteinerwritedickrspun}>Код подтверждения действует 2 минуты</label>
+                  <div>{errors?.gmail && <p style={{ color: 'red' }}>{errors?.gmail.message || 'Error!'}</p>}</div>
+                  <input className={classes.buttonSubmit} type="submit" value="Отправить" />
+                </form>
+              </div>
+            </> :
+            <>
+              <div className={classes.conteinerwriteposi}>
+                <div className={classes.conteinertitle}>Войти</div>
+                <div className={classes.conteinerwritedickr}>
+                  <p className={classes.conteinerheder}>Продолжая, вы соглашаетесь с нашим <span className={classes.conteinerwritedickrspun}>Пользовательским соглашением,</span> <span className={classes.conteinerwritedickrspun}>Политикой конфиденциальности</span> и использованием файлов <span className={classes.conteinerwritedickrspun}>COOKIE</span></p>
+                </div>
+                <form className={classes.formUserAuth} onSubmit={handleSubmit(onSubmit)}>
+                  {userStatus !== '' ?
+                    <p className={classes.notUser}>{userStatus}</p> :
+                    <></>
+                  }
+                  <input {...register('gmail', {
+                    required: 'Поле не может быть пустым',
+                    minLength: {
+                      value: 5,
+                      message: 'Мало символов'
+                    },
+                    pattern: {
+                      value: /[A-Za-zA-Za-z]+[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?/,
+                      message: 'Mail не корктный'
+                    }
+                  })} className={classes.inputMail} type="text" placeholder='Адрес электронной почты' onChange={handleSubmit1} />
+                  <div>{errors?.gmail && <p style={{ color: 'red' }}>{errors?.gmail.message || 'Error!'}</p>}</div>
+                  {timeStatus !=='' ?
+                    <p className={classes.notUser}>{timeStatus}</p> :
+                    <></>
+                  }
+                  <input className={classes.buttonSubmit} type="submit" value="Отправить" />
+                </form>
+                <div className={classes.conteinerheder}>Вы у нас впервые? <span className={classes.registrspun}><Link href="#">ЗАРЕГИСТРИРОВАТЬСЯ</Link></span></div>
+                <Link className={classes.supportUser} to="#">Поддержка пользователей онлайн</Link>
+              </div></>}
           <button className={classes.buttonCloise} onClick={props.func}><img src="/Group 86.svg" alt="" /></button>
         </div>
       </div>
