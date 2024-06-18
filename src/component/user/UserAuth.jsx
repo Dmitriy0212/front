@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { useState } from "react"
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import Url from '../url/Url.js'
 export default function UserAuth(props) {
   const [userStatus, setUserStatus] = useState('');
   const [codeStatus, setCodeStatus] = useState(false);
@@ -13,7 +14,7 @@ export default function UserAuth(props) {
 
   const onSubmit = (data) => {
     if (isValid === true) {
-      axios.post("https://jihugy-7507e8053d51.herokuapp.com/auth", data).then((response) => {
+      axios.post(`${Url}/auth`, data).then((response) => {
 
         if (response.data.status !== 200) {
           setUserStatus('У нас не зарегистрирован пользователь с таким адресом электронной почты')
@@ -31,15 +32,17 @@ export default function UserAuth(props) {
     }
   }
 
+  const onSubmit1 = () => {
+   alert('some code')
+  }
+
   const timeOut = () => {
     setTimeout(() => {
       setCodeStatus(false);
-      
-      console.log(timeStatus)
-    },"3000");
+    },"120000");
   }
 
-  const handleSubmit1 = (e) => {
+  const handleSubmit1 = () => {
     setUserStatus('')
     setTimeStatus('')
   }
@@ -57,7 +60,7 @@ export default function UserAuth(props) {
                 <div className={classes.conteinerwritedickrafter}>
                   <p className={classes.conteinerheder}>который мы отправили на ваш адрес электронной почты {mailStatus}</p>
                 </div>
-                <form className={classes.formUserAuth} onSubmit={handleSubmit(onSubmit)}>
+                <form className={classes.formUserAuth} onSubmit={handleSubmit(onSubmit1)}>
                   {userStatus !== '' ?
                     <p className={classes.notUser}>{userStatus}</p> :
                     <></>
