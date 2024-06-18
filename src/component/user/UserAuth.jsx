@@ -34,6 +34,7 @@ export default function UserAuth(props) {
 
   const onSubmit1 = () => {
    alert('some code')
+    props.func()
   }
 
   const timeOut = () => {
