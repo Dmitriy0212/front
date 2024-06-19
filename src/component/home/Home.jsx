@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from "./Home.module.css";
 import UserAuth from '../user/UserAuth.jsx'
 
-const Addpost = () => {
+const Home = () => {
     const [shou, setShou] = useState(false);
+    const [auth, setAuth] = useState(true);
     function clickHandlerClick() {
         if (shou === true) {
             setShou(false)
@@ -12,10 +13,23 @@ const Addpost = () => {
             setShou(true)
         }
     }
+
+    function clickHandlerClick1() {
+        setAuth(true)
+        window.localStorage.clear()
+    }
+    useEffect(() => {
+        if (window.localStorage.getItem('token')) {
+            setAuth(false)
+        }
+    }, [setAuth]);
     return (
         <>
             <div className={classes.content}>
-                <button onClick={clickHandlerClick}>Войти</button>
+                {auth === true ?
+                    <button onClick={clickHandlerClick}>Войти</button> :
+                    <button onClick={clickHandlerClick1}>Выйти</button>
+                }
                 {shou === true ?
                     <UserAuth func={clickHandlerClick} /> :
                     <></>
@@ -24,4 +38,4 @@ const Addpost = () => {
         </>
     );
 };
-export default Addpost;
+export default Home;

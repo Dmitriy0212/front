@@ -2,27 +2,26 @@ import classes from "./UserAuth.module.css";
 import { useForm } from "react-hook-form"
 import { useState } from "react"
 import { Link } from "react-router-dom";
-import axios from 'axios';
-import Url from '../url/Url.js'
+import axios from '../url/axios.js'
+
 export default function UserAuth(props) {
   const [userStatus, setUserStatus] = useState('');
   const [codeStatus, setCodeStatus] = useState(false);
-  const [mailStatus, setMailStatus] = useState('');
   const [timeStatus, setTimeStatus] = useState('');
+  const [mailValue, setMailValue] = useState('');
+  const [codeTrue, setcodeTrue] = useState(true);
 
   const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm({ mode: 'onSubmit' })
 
   const onSubmit = (data) => {
     if (isValid === true) {
-      axios.post(`${Url}/auth`, data).then((response) => {
-
+      axios.post('/auth', data).then((response) => {
         if (response.data.status !== 200) {
           setUserStatus('У нас не зарегистрирован пользователь с таким адресом электронной почты')
           return
         }
         if (response.data.status === 200) {
-          console.log(response.data.mail)
-          setMailStatus(response.data.mail)
+          setMailValue(response.data.mail)
           setCodeStatus(true)
           reset()
           timeOut()
@@ -32,14 +31,25 @@ export default function UserAuth(props) {
     }
   }
 
-  const onSubmit1 = () => {
-   alert('some code')
+  const onSubmit1 = async (data) => {
+    await axios.post('/tocenemail', { mailValue, data }).then((response) => {
+      if (!response.data.token) {
+        console.log('lkjonnn')
+      }
+      else if ('token' in response.data.token) {
+        window.localStorage.setItem('token',response.data.token.token)
+        props.func()
+      }
+      else {
+        setcodeTrue(false)
+      }
+    });
   }
 
   const timeOut = () => {
     setTimeout(() => {
       setCodeStatus(false);
-    },"120000");
+    }, "120000");
   }
 
   const handleSubmit1 = () => {
@@ -58,21 +68,25 @@ export default function UserAuth(props) {
               <div className={classes.conteinerwriteposi}>
                 <div className={classes.conteinertitle}>Введите код подтверждения</div>
                 <div className={classes.conteinerwritedickrafter}>
-                  <p className={classes.conteinerheder}>который мы отправили на ваш адрес электронной почты {mailStatus}</p>
+                  <p className={classes.conteinerheder}>который мы отправили на ваш адрес электронной почты {mailValue}</p>
                 </div>
                 <form className={classes.formUserAuth} onSubmit={handleSubmit(onSubmit1)}>
-                  {userStatus !== '' ?
-                    <p className={classes.notUser}>{userStatus}</p> :
+                  {codeTrue === false ?
+                    <p className={classes.notUser}>Неверный код</p> :
                     <></>
                   }
-                  <input {...register('gmail', {
+                  <input {...register('code', {
                     required: 'Поле не может быть пустым',
                     minLength: {
-                      value: 5,
+                      value: 3,
                       message: 'Мало символов'
                     }
                   })} className={classes.inputMail} type="text" placeholder='Код подтверждения' onChange={handleSubmit1} />
                   <label className={classes.conteinerwritedickrspun}>Код подтверждения действует 2 минуты</label>
+                  {userStatus !== '' ?
+                    <p className={classes.notUser}>{userStatus}</p> :
+                    <></>
+                  }
                   <div>{errors?.gmail && <p style={{ color: 'red' }}>{errors?.gmail.message || 'Error!'}</p>}</div>
                   <input className={classes.buttonSubmit} type="submit" value="Отправить" />
                 </form>
@@ -101,7 +115,7 @@ export default function UserAuth(props) {
                     }
                   })} className={classes.inputMail} type="text" placeholder='Адрес электронной почты' onChange={handleSubmit1} />
                   <div>{errors?.gmail && <p style={{ color: 'red' }}>{errors?.gmail.message || 'Error!'}</p>}</div>
-                  {timeStatus !=='' ?
+                  {timeStatus !== '' ?
                     <p className={classes.notUser}>{timeStatus}</p> :
                     <></>
                   }
