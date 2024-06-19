@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 const instans = axios.create({
-    baseURL:'http://localhost:8080'
+    baseURL:'https://jihugy-7507e8053d51.herokuapp.com'
 })
 /*instans.interceptors.request.use((config)=>{
     console.log(config)
