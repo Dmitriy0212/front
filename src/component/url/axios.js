@@ -1,5 +1,6 @@
 import axios from 'axios';
 //const Url = "https://jihugy-7507e8053d51.herokuapp.com"
+//const Url = "http://localhost:8080/"
 
 
 const instans = axios.create({

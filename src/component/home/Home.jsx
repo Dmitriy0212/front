@@ -6,6 +6,7 @@ const Home = () => {
     const [shou, setShou] = useState(false);
     const [auth, setAuth] = useState(true);
     function clickHandlerClick() {
+        setAuth(false)
         if (shou === true) {
             setShou(false)
         }
@@ -29,6 +30,10 @@ const Home = () => {
                 {auth === true ?
                     <button onClick={clickHandlerClick}>Войти</button> :
                     <button onClick={clickHandlerClick1}>Выйти</button>
+                }
+                {auth === true ?
+                    <></> :
+                    <p>Вы авторизованы</p>
                 }
                 {shou === true ?
                     <UserAuth func={clickHandlerClick} /> :
