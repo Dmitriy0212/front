@@ -2,7 +2,8 @@ import classes from "./UserAuth.module.css";
 import { useForm } from "react-hook-form"
 import { useState } from "react"
 import { Link } from "react-router-dom";
-import axios from '../url/axios.js'
+import axios from 'axios'
+import Url from "../url/Url.js";
 
 export default function UserAuth(props) {
   const [userStatus, setUserStatus] = useState('');
@@ -15,7 +16,7 @@ export default function UserAuth(props) {
 
   const onSubmit = (data) => {
     if (isValid === true) {
-      axios.post('/auth', data).then((response) => {
+      axios.post(Url+"/auth", data).then((response) => {
         if (response.data.status !== 200) {
           setUserStatus('У нас не зарегистрирован пользователь с таким адресом электронной почты')
           return
@@ -32,13 +33,14 @@ export default function UserAuth(props) {
   }
 
   const onSubmit1 = async (data) => {
-    await axios.post('/tocenemail', { mailValue, data }).then((response) => {
+    await axios.post(Url+"/tocenemail", { mailValue, data }).then((response) => {
       if (!response.data.token) {
         console.log('lkjonnn')
       }
       else if ('token' in response.data.token) {
         window.localStorage.setItem('token',response.data.token.token)
-        props.func()
+        props.auth()
+        props.authTrue()
       }
       else {
         setcodeTrue(false)
@@ -121,10 +123,10 @@ export default function UserAuth(props) {
                   }
                   <input className={classes.buttonSubmit} type="submit" value="Отправить" />
                 </form>
-                <div className={classes.conteinerheder}>Вы у нас впервые? <span className={classes.registrspun}><Link href="#">ЗАРЕГИСТРИРОВАТЬСЯ</Link></span></div>
+                <div className={classes.conteinerheder}>Вы у нас впервые? <span className={classes.registrspun}><div className={classes.registrdiv} onClick={props.toRegistr}>ЗАРЕГИСТРИРОВАТЬСЯ</div></span></div>
                 <Link className={classes.supportUser} to="#">Поддержка пользователей онлайн</Link>
               </div></>}
-          <button className={classes.buttonCloise} onClick={props.func}><img src="/Group 86.svg" alt="" /></button>
+          <button className={classes.buttonCloise} onClick={props.auth}><img src="/Group 86.svg" alt="" /></button>
         </div>
       </div>
     </>

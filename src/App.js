@@ -9,7 +9,6 @@ function App() {
       <div className={classes.contentApp}>
         <Home />
       </div>
-
     </>
   );
 }

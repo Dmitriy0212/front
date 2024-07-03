@@ -1,0 +1,190 @@
+.content {
+  display: flex;
+  flex-direction: row;
+  max-width: 705px;
+  padding: 0px;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+.conteinerleft {
+  display: flex;
+  width: 142px;
+  min-height: 844px;
+  background: linear-gradient(180deg, #737373 0%, #4C4C4C 0.01%);
+  border-radius: 10px 0px 0px 10px;
+}
+
+.conteinerwrite {
+  display: flex;
+  width: 561px;
+  min-height: 844px;
+  background: #FFFFFF;
+  border-radius: 0px 10px 10px 0px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  position: relative
+}
+
+.conteinerwritedickr {
+  width: 225px;
+}
+
+.conteinerwritedickrspun {
+  color: #EFA96E;
+}
+
+.conteinerleftimg {
+  margin: 55px 0px auto -8px;
+
+}
+
+.conteinertitle {
+  margin: 20px auto 22px 0px;
+  font-family: Philosopher;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 13.44px;
+  text-align: left;
+  color: #4C4C4C;
+}
+
+.inputMail {
+  font-family: Philosopher;
+  font-weight: 400;
+  line-height: 13px;
+  border: 1px solid #A5A5A5;
+  height: 40px;
+  font-size: 13px;
+  word-spacing: 1.5px;
+  color: black;
+}
+
+.conteinerheder {
+  font-family: Philosopher;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 13px;
+  text-align: left;
+  color: #4C4C4C;
+  word-spacing: 2.5px;
+}
+
+.conteinerwriteposi {
+  margin: 35px 34px auto 43px;
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonSubmit {
+  color: #FFFFFF;
+  width: 265px;
+  height: 39px;
+  border-radius: 3px;
+  background: #EFA96E;
+  margin: 30px auto 32px 0px;
+  cursor: pointer;
+}
+
+.buttonSubmit:hover {
+  background: #EFA96EB2;
+}
+
+.formUserAuth {
+  display: flex;
+  flex-direction: column;
+  margin: 32px auto 0px 0px;
+  align-items: flex-start;
+}
+
+.registrspun {
+  font-family: Philosopher;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 13.44px;
+  text-align: left;
+  color: #E32999;
+}
+
+.supportUser {
+  width: 265px;
+  height: 39px;
+  border-radius: 18px;
+  background: #AEAFBC;
+  font-family: Philosopher;
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 9.68px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 46px;
+}
+
+.buttonCloise {
+  transition: 0.5s;
+  position: absolute;
+  right: 3%;
+  top: 24px;
+  width: 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.buttonCloise:hover {
+  transition: 0.5s;
+  background: #ffd6d61a;
+  border-radius: 2px;
+}
+
+.notUser {
+  font-family: Segoe UI;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 14.63px;
+  text-align: left;
+  color: #F5101E;
+}
+
+.conteinerwritedickrafter {
+  width: 268px;
+}
+
+.registrdiv {
+  display: inline;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .conteinerwriteposi {
+    margin: 35px 20px auto 20px;
+  }
+}
+
+@media (max-width: 560px) {
+  .conteinerwriteposi {
+    margin: 35px 10px auto 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  .conteinerleft {
+    display: none;
+  }
+
+  .conteinerwrite {
+    width: 100%;
+    border-radius: 10px;
+    justify-content: center
+  }
+}

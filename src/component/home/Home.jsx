@@ -1,27 +1,64 @@
 import React, { useEffect, useState } from 'react';
 import classes from "./Home.module.css";
-import UserAuth from '../user/UserAuth.jsx'
+import UserAuth from '../userauth/UserAuth.jsx'
+import UserRegistr from '../registration/UserRegistr.jsx'
 
 const Home = () => {
-    const [shou, setShou] = useState(false);
+    const [shouAuth, setshouAuth] = useState(false);
     const [auth, setAuth] = useState(true);
+    const [shouRegistr, setShouRegistr] = useState(false);
     function clickHandlerClick() {
-        setAuth(false)
-        if (shou === true) {
-            setShou(false)
+        if (shouAuth === true) {
+            setshouAuth(false)
         }
         else {
-            setShou(true)
+            setshouAuth(true)
+        }
+    }
+
+    function clickHandlerClick4() {
+        if (shouRegistr === true) {
+            setShouRegistr(false)
+        }
+        else {
+            setShouRegistr(true)
         }
     }
 
     function clickHandlerClick1() {
-        setAuth(true)
         window.localStorage.clear()
+        if (window.localStorage.getItem('token')) {
+            setAuth(false)
+        }
+        else{
+            setAuth(true)
+        }
+    }
+
+    function clickHandlerClick2() {
+        if (window.localStorage.getItem('token')) {
+            setAuth(false)
+        }
+        else{
+            setAuth(true)
+        }
+    }
+
+    function clickHandlerClick3() {
+        setshouAuth(false)
+        setShouRegistr(true)
+    }
+
+    function clickHandlerClick5() {
+        setshouAuth(true)
+        setShouRegistr(false)
     }
     useEffect(() => {
         if (window.localStorage.getItem('token')) {
             setAuth(false)
+        }
+        else{
+            setAuth(true)
         }
     }, [setAuth]);
     return (
@@ -35,8 +72,12 @@ const Home = () => {
                     <></> :
                     <p>Вы авторизованы</p>
                 }
-                {shou === true ?
-                    <UserAuth func={clickHandlerClick} /> :
+                {shouAuth === true ?
+                    <UserAuth auth={clickHandlerClick} authTrue={clickHandlerClick2} toRegistr={clickHandlerClick3} /> :
+                    <></>
+                }
+                {shouRegistr === true ?
+                    <UserRegistr auth={clickHandlerClick4} authTrue={clickHandlerClick2} toRegistr={clickHandlerClick5}  /> :
                     <></>
                 }
             </div>

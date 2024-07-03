@@ -28,6 +28,7 @@
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: flex-start;
+  position: relative
 }
 
 .conteinerwritedickr {
@@ -62,6 +63,7 @@
   font-size: 13px;
   word-spacing: 1.5px;
   color: black;
+  margin-bottom: 20px;
 }
 
 .conteinerheder {
@@ -87,6 +89,7 @@
   border-radius: 3px;
   background: #EFA96E;
   margin: 30px auto 32px 0px;
+  cursor: pointer;
 }
 
 .formUserAuth {
@@ -125,7 +128,7 @@
 .buttonCloise {
   transition: 0.5s;
   position: absolute;
-  right: 26px;
+  right: 3%;
   top: 24px;
   width: 35px;
   display: flex;
@@ -152,4 +155,37 @@
 
 .conteinerwritedickrafter {
   width: 268px;
+}
+
+.registrdiv{
+  display: inline;
+  cursor: pointer;
+}
+
+.buttonSubmit:hover {
+  background: #EFA96EB2;
+}
+
+@media (max-width: 600px) {
+  .conteinerwriteposi {
+    margin: 35px 20px auto 20px;
+  }
+}
+
+@media (max-width: 560px) {
+  .conteinerwriteposi {
+    margin: 35px 10px auto 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  .conteinerleft {
+    display: none;
+  }
+
+  .conteinerwrite {
+    width: 100%;
+    border-radius: 10px;
+    justify-content: center
+  }
 }
